@@ -2,7 +2,9 @@ from os import listdir
 from pandas import read_table
 
 class ingest_src():
-    def __init__(self,src_location:str,extension:str,compression:str,separator:str,classification:list=[]):
+    "Handles ingestion of delimited files from a source directory"
+
+    def __init__(self,src_location:str,extension:str='.gz',compression:str='gzip',separator:str='|',classification:str=None):
         self.src_location = src_location
         self.extension = extension
         self.compression = compression
@@ -10,22 +12,49 @@ class ingest_src():
         self.classification = classification
         return None
 
-    def ingest(self):
-        self.src_file_list = self.get_src_files(self.src_location,self.extension)
+    def ingest(self) -> dict:
+        """
+        Primary function of this class.
+        Executes the full ingestion process: finds files and loads them into a dict of dataframes
+
+        Returns:
+            dict: Dictionary of DataFrames (output of create_df method)
+        """
+        self.src_file_list = self.get_src_files(self.src_location,self.extension,self.classification)
         self.df_dict = self.create_df(self.src_file_list,self.compression,self.separator)
         return self.df_dict
 
     def get_src_files(self, loc:str, ext:str, prefix:str=None) -> list:
+        """
+        Retrieves specific extension files from the source directory with optional prefix
+
+        Arg:
+            loc (str): Directory path
+            ext (str): File extension to match
+            prefix (str, optional): Only include files starting with this prefix
+        Returns:
+            list: List of file paths
+        """
         if not loc.endswith('\\'):
             loc += '\\'
         file_list = [loc+i for i in listdir(loc) if i.endswith(ext) and (not prefix or i.startswith(prefix))]
         return file_list
 
     def create_df(self, file_list:list,compression:str, sep:str) -> dict:
+        """
+        Reads from a list of file and creates a dict of pd dataFrame with filename as keys
+
+        Arg:
+            file_list (list): List of file paths to load
+            compression (str): Compression type used in the files
+            sep (str): Delimiter used in the files
+        Returns:
+            dict: Dictionary of DataFrames keyed by filename
+        """
         df_dict = {}
         for file in file_list:
 
-            df_name = file.rsplit('\\',1)[-1]
+            df_name = file.rsplit('\\',1)[-1].strip(self.extension)
             df = read_table(file,compression=compression,sep=sep)
             df_dict[df_name] = df
 
