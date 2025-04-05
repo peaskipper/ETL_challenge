@@ -1,0 +1,25 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam entity {
+  BackgroundColor<<Fact>> #FDF6E3
+  BackgroundColor<<Dimension>> #E6F7FF
+}
+entity "fact_averagecosts_dlm_gz" <<Fact>> {
+  * fscldt_id
+  sku_id
+  average_unit_standardcost
+  average_unit_landedcost
+}
+entity "hier_clnd_dlm_gz" <<Dimension>> {
+  * fscldt_id
+  fscldt_label
+  fsclwk_id
+  fsclwk_label
+  fsclmth_id
+}
+
+fact_averagecosts_dlm_gz }|-- hier_clnd_dlm_gz
+
+@enduml

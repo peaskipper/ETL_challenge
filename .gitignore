@@ -1,3 +1,8 @@
 #vsc configs
 *./rmv
 *./vsconfig
+
+#debug tools
+# output_obj/*
+*.pyc
+*.pyo

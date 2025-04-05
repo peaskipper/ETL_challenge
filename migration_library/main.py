@@ -11,7 +11,7 @@ import re
 ### self defined lib
 from ingest import ingest_src
 from analyse import parse_dataset
-
+from uml_writer import puml_script
 
 ######## Class, method Fn definitions
 
@@ -51,7 +51,15 @@ relation_dim_dict = parsed_dataset.find_relation(dim_list, one2many=False)
 
 ##### Write puml script
 
+script = puml_script(classification)
+for tbl,data in tbl_parsed_dict.items():
+    typ = tbl.split('.',maxsplit=1)[0]
+    tbl_name = tbl.replace('.','_')
+    entity = script.add_entity(tbl_name,data['columns'],typ)
+
+puml_file_path = 'ETL_challenge\\output_obj\\ER_diagram_2.puml'
+save = script.end_script(puml_file_path)
 
 ######## debug
-# x = relation_fct_dict
-# print(x)
+# x = relation_dim_dict
+print(True)

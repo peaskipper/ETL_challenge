@@ -18,13 +18,13 @@ class ingest_src():
         Executes the full ingestion process: finds files and loads them into a dict of dataframes
 
         Returns:
-            dict: Dictionary of DataFrames (output of create_df method)
+            dict: Dictionary of DataFrames (output of _create_df method)
         """
-        self.src_file_list = self.get_src_files(self.src_location,self.extension,self.classification)
-        self.df_dict = self.create_df(self.src_file_list,self.compression,self.separator)
+        self.src_file_list = self._get_src_files(self.src_location,self.extension,self.classification)
+        self.df_dict = self._create_df(self.src_file_list,self.compression,self.separator)
         return self.df_dict
 
-    def get_src_files(self, loc:str, ext:str, prefix:str=None) -> list:
+    def _get_src_files(self, loc:str, ext:str, prefix:str=None) -> list:
         """
         Retrieves specific extension files from the source directory with optional prefix
 
@@ -40,7 +40,7 @@ class ingest_src():
         file_list = [loc+i for i in listdir(loc) if i.endswith(ext) and (not prefix or i.startswith(prefix))]
         return file_list
 
-    def create_df(self, file_list:list,compression:str, sep:str) -> dict:
+    def _create_df(self, file_list:list,compression:str, sep:str) -> dict:
         """
         Reads from a list of file and creates a dict of pd dataFrame with filename as keys
 
