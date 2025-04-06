@@ -18,10 +18,12 @@ class parse_dataset():
         for tbl, df in dataframe_dict.items():
             key = self._get_pk(df)
             columns = self._key_as_first_col(df.columns.tolist(), key)
+            data_type = self._infer_column_type(df,columns)
             tbl_parsed_dict[tbl] = {
                 'filename':tbl,
                 'df':df,
                 'columns':columns,
+                'data_type':data_type,
                 'pk':key
             }
         return tbl_parsed_dict
@@ -49,7 +51,7 @@ class parse_dataset():
         # Return first column if no suitable column is found
         return df.columns[0]
 
-    def find_relation(self, tbl_list, one2many=True):
+    def find_relation(self, tbl_list, one2many:bool=True):
         """
         Identify potential relationships between tables based on shared columns
 
@@ -81,7 +83,50 @@ class parse_dataset():
         return relationship
 
     def _key_as_first_col(self, columns:list, key:str):
-        # if key in columns:
-        #     columns.remove(key)
-        #     return [key].extend(columns)
+        """Moves the key column to the start of the list
+        Arg:
+            columns (list): Unordered column list
+            key (string): Key column
+        Returns:
+            list: List of columns with key column as first item
+        """
+        return_list = []
+        if key in columns:
+            columns.remove(key)
+            return_list.append(key)
+            return_list.extend(columns)
+            return return_list
         return columns
+    
+    def _infer_column_type(self, df, columns:list=None, map_type:bool=True):
+        """Returns a list of inferred column data type, in the same order as columns list
+        Arg:
+            df (dataFrame): Input dataFrame
+            columns (list): prederived and ordered column list
+            map_type (bool): Default mapping for pandas dtype to universal type
+        Returns:
+            list: List of data type as strings
+        """
+        # Default mapping
+        type_mapping = {
+            'object': 'string',
+            'int64': 'int',
+            'int32': 'int',
+            'float64': 'float',
+            'float32': 'float',
+            'bool': 'bool',
+            'datetime64[ns]': 'datetime',
+            'timedelta[ns]': 'timedelta',
+            'category': 'string'
+        }
+
+        columns = df.columns if not columns else columns
+        result = []
+        for col in columns:
+            dtype_str = str(df[col].dtype)
+            if map_type:
+                dtype_str = type_mapping.get(dtype_str, dtype_str)       #TODO: build fallback to original if not mapped
+            else:
+                dtype_str = dtype_str
+            result.append(dtype_str)
+        return result

@@ -11,113 +11,123 @@ BackgroundColor<<Hier>> #E6F7FF
 }
 
 entity "fact_averagecosts_dlm" <<fact>> {
-    * fscldt_id
-		sku_id
-		average_unit_standardcost
-		average_unit_landedcost
+    pk: fscldt_id : int
+		---
+		sku_id : string
+		average_unit_standardcost : float
+		average_unit_landedcost : float
 }
 entity "fact_transactions_dlm" <<fact>> {
-    * order_id
-		line_id
-		type
-		dt
-		pos_site_id
-		sku_id
-		fscldt_id
-		price_substate_id
-		sales_units
-		sales_dollars
-		discount_dollars
-		original_order_id
-		original_line_id
+    pk: order_id : int
+		---
+		line_id : int
+		type : string
+		dt : string
+		pos_site_id : string
+		sku_id : string
+		fscldt_id : int
+		price_substate_id : string
+		sales_units : int
+		sales_dollars : float
+		discount_dollars : float
+		original_order_id : float
+		original_line_id : float
 }
 entity "hier_clnd_dlm" <<hier>> {
-    * fscldt_id
-		fscldt_label
-		fsclwk_id
-		fsclwk_label
-		fsclmth_id
-		fsclmth_label
-		fsclqrtr_id
-		fsclqrtr_label
-		fsclyr_id
-		fsclyr_label
-		ssn_id
-		ssn_label
-		ly_fscldt_id
-		lly_fscldt_id
-		fscldow
-		fscldom
-		fscldoq
-		fscldoy
-		fsclwoy
-		fsclmoy
-		fsclqoy
-		date
+    pk: fscldt_id : int
+		---
+		fscldt_label : string
+		fsclwk_id : int
+		fsclwk_label : string
+		fsclmth_id : int
+		fsclmth_label : string
+		fsclqrtr_id : int
+		fsclqrtr_label : string
+		fsclyr_id : int
+		fsclyr_label : int
+		ssn_id : string
+		ssn_label : string
+		ly_fscldt_id : int
+		lly_fscldt_id : int
+		fscldow : int
+		fscldom : int
+		fscldoq : int
+		fscldoy : int
+		fsclwoy : int
+		fsclmoy : int
+		fsclqoy : int
+		date : string
 }
 entity "hier_hldy_dlm" <<hier>> {
-    * hldy_id
-		hldy_label
+    pk: hldy_id : string
+		---
+		hldy_label : string
 }
 entity "hier_invloc_dlm" <<hier>> {
-    * loc
-		loc_label
-		loctype
-		loctype_label
+    pk: loc : int
+		---
+		loc_label : string
+		loctype : string
+		loctype_label : string
 }
 entity "hier_invstatus_dlm" <<hier>> {
-    * code_id
-		code_label
-		bckt_id
-		bckt_label
-		ownrshp_id
-		ownrshp_label
+    pk: code_id : string
+		---
+		code_label : string
+		bckt_id : string
+		bckt_label : string
+		ownrshp_id : string
+		ownrshp_label : string
 }
 entity "hier_possite_dlm" <<hier>> {
-    * site_id
-		site_label
-		subchnl_id
-		subchnl_label
-		chnl_id
-		chnl_label
+    pk: site_id : string
+		---
+		site_label : string
+		subchnl_id : string
+		subchnl_label : string
+		chnl_id : string
+		chnl_label : string
 }
 entity "hier_pricestate_dlm" <<hier>> {
-    * substate_id
-		substate_label
-		state_id
-		state_label
+    pk: substate_id : string
+		---
+		substate_label : string
+		state_id : string
+		state_label : string
 }
 entity "hier_prod_dlm" <<hier>> {
-    * sku_id
-		sku_label
-		stylclr_id
-		stylclr_label
-		styl_id
-		styl_label
-		subcat_id
-		subcat_label
-		cat_id
-		cat_label
-		dept_id
-		dept_label
-		issvc
-		isasmbly
-		isnfs
+    pk: sku_id : string
+		---
+		sku_label : string
+		stylclr_id : string
+		stylclr_label : string
+		styl_id : string
+		styl_label : string
+		subcat_id : int
+		subcat_label : string
+		cat_id : int
+		cat_label : string
+		dept_id : int
+		dept_label : string
+		issvc : int
+		isasmbly : int
+		isnfs : int
 }
 entity "hier_rtlloc_dlm" <<hier>> {
-    * str
-		str_label
-		dstr
-		dstr_label
-		rgn
-		rgn_label
+    pk: str : int
+		---
+		str_label : string
+		dstr : int
+		dstr_label : string
+		rgn : int
+		rgn_label : string
 }
 
-fact_averagecosts_dlm "fscldt_id" }|--o| hier_clnd_dlm
-fact_averagecosts_dlm "sku_id" }|--o| hier_prod_dlm
+fact_averagecosts_dlm }|--o| hier_clnd_dlm
+fact_averagecosts_dlm }|--o| hier_prod_dlm
 
-fact_transactions_dlm "sku_id" }|--o| hier_prod_dlm
-fact_transactions_dlm "fscldt_id" }|--o| hier_clnd_dlm
+fact_transactions_dlm }|--o| hier_prod_dlm
+fact_transactions_dlm }|--o| hier_clnd_dlm
 
 
 @enduml

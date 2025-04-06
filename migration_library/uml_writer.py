@@ -19,20 +19,27 @@ BackgroundColor<<Hier>> #E6F7FF
     def add_entity(self, name:str, columns:list, typ:str='Fact'):
         
         line_break = '\n\t\t'
+        column_struct = [f"{col} : {col_typ}" for col, col_typ in columns]
+        if len(column_struct) > 1:
+            column_struct = line_break.join([column_struct[0], '---'] + column_struct[1:])
+        else:
+            column_struct = column_struct[0] if column_struct else ''
+
         entity_txt = f'''
 entity "{name}" <<{typ}>> {{
-    * {line_break.join(columns)}
+    pk: {column_struct}
 }}'''
         self.script += entity_txt
         return self.script
     
-    def add_relationship(self, relation_dict):
+    def add_relationship(self, relation_dict, arrow_text=False):
         """ WIP """
         line_break = '\n'
         self.script += line_break
         for trgt_tbl, rel_tuple in relation_dict.items():
             for keycol,src_tbl in rel_tuple:
-                entity_txt = f'''{line_break}{tbl_name_reformat(trgt_tbl)} "{keycol}" }}|--o| {tbl_name_reformat(src_tbl)}'''
+                keycol = f'"{keycol}" ' if arrow_text else ''
+                entity_txt = f'''{line_break}{tbl_name_reformat(trgt_tbl)} {keycol}}}|--o| {tbl_name_reformat(src_tbl)}'''
                 self.script += entity_txt
             self.script += line_break
         return self.script
