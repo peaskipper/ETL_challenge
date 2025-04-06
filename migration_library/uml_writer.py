@@ -5,7 +5,7 @@ class puml_script():
         default_format = """
 hide circle
 top to bottom direction
-skinparam dpi 100
+skinparam dpi 200
 skinparam defaultTextAlignment left
 skinparam linetype ortho
 skinparam shadowing false

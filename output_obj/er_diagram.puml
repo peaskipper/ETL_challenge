@@ -1,7 +1,7 @@
 @startuml
 hide circle
 top to bottom direction
-skinparam dpi 100
+skinparam dpi 200
 skinparam defaultTextAlignment left
 skinparam linetype ortho
 skinparam shadowing false
@@ -11,13 +11,15 @@ BackgroundColor<<Hier>> #E6F7FF
 }
 
 entity "fact_averagecosts_dlm" <<fact>> {
-    'pk: '* fscldt_id : int
+    pk: fscldt_id : int
+		---
 		sku_id : string
 		average_unit_standardcost : float
 		average_unit_landedcost : float
 }
 entity "fact_transactions_dlm" <<fact>> {
-    'pk: '* order_id : int
+    pk: order_id : int
+		---
 		line_id : int
 		type : string
 		dt : string
@@ -32,7 +34,7 @@ entity "fact_transactions_dlm" <<fact>> {
 		original_line_id : float
 }
 entity "hier_clnd_dlm" <<hier>> {
-    'pk: 'pk: fscldt_id : int
+    pk: fscldt_id : int
 		---
 		fscldt_label : string
 		fsclwk_id : int
@@ -57,19 +59,19 @@ entity "hier_clnd_dlm" <<hier>> {
 		date : string
 }
 entity "hier_hldy_dlm" <<hier>> {
-    'pk: 'pk: hldy_id : string
+    pk: hldy_id : string
 		---
 		hldy_label : string
 }
 entity "hier_invloc_dlm" <<hier>> {
-    'pk: 'pk: loc : int
+    pk: loc : int
 		---
 		loc_label : string
 		loctype : string
 		loctype_label : string
 }
 entity "hier_invstatus_dlm" <<hier>> {
-    'pk: 'pk: code_id : string
+    pk: code_id : string
 		---
 		code_label : string
 		bckt_id : string
@@ -78,7 +80,7 @@ entity "hier_invstatus_dlm" <<hier>> {
 		ownrshp_label : string
 }
 entity "hier_possite_dlm" <<hier>> {
-    'pk: 'pk: site_id : string
+    pk: site_id : string
 		---
 		site_label : string
 		subchnl_id : string
@@ -87,14 +89,14 @@ entity "hier_possite_dlm" <<hier>> {
 		chnl_label : string
 }
 entity "hier_pricestate_dlm" <<hier>> {
-    'pk: 'pk: substate_id : string
+    pk: substate_id : string
 		---
 		substate_label : string
 		state_id : string
 		state_label : string
 }
 entity "hier_prod_dlm" <<hier>> {
-    'pk: 'pk: sku_id : string
+    pk: sku_id : string
 		---
 		sku_label : string
 		stylclr_id : string
@@ -112,7 +114,7 @@ entity "hier_prod_dlm" <<hier>> {
 		isnfs : int
 }
 entity "hier_rtlloc_dlm" <<hier>> {
-    'pk: 'pk: str : int
+    pk: str : int
 		---
 		str_label : string
 		dstr : int
