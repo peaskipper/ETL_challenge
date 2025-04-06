@@ -1,0 +1,52 @@
+name: data_flow
+
+git_source:
+  git_url: https://github.com/peaskipper/ETL_challenge.git
+  git_provider: gitHub
+  git_branch: develop
+
+jobs:
+  - name: data_ingestion
+    notebook_task:
+      notebook_path: pipeline_notebooks/write_to_adls
+    job_cluster_key: job_cluster
+
+  - name: data_validation
+    depends_on:
+      - data_ingestion
+    notebook_task:
+      notebook_path: pipeline_notebooks/data_validation
+    job_cluster_key: job_cluster
+
+  - name: data_staging
+    depends_on:
+      - data_validation
+    notebook_task:
+      notebook_path: pipeline_notebooks/data_staging
+    job_cluster_key: job_cluster
+
+  - name: data_aggregate
+    depends_on:
+      - data_staging
+    notebook_task:
+      notebook_path: notebooks/data_aggregate
+    job_cluster_key: job_cluster
+
+  - name: data_aggregation_dlt
+    depends_on:
+      - data_staging
+    notebook_task:
+      notebook_path: pipeline_notebooks/data_aggregation_dlt
+    job_cluster_key: job_cluster
+
+job_clusters:
+  - job_cluster_key: job_cluster
+    new_cluster:
+      spark_version: 13.3.x-scala2.12
+      num_workers: 2
+      node_type_id: Standard_DS3_v2
+      autoscale:
+        min_workers: 1
+        max_workers: 4
+      custom_tags:
+        usage: data_pipeline

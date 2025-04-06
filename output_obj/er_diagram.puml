@@ -1,0 +1,133 @@
+@startuml
+hide circle
+top to bottom direction
+skinparam dpi 200
+skinparam defaultTextAlignment left
+skinparam linetype ortho
+skinparam shadowing false
+skinparam entity {
+BackgroundColor<<Fact>> #FDF6E3
+BackgroundColor<<Hier>> #E6F7FF
+}
+
+entity "fact_averagecosts_dlm" <<fact>> {
+    pk: fscldt_id : int
+		---
+		sku_id : string
+		average_unit_standardcost : float
+		average_unit_landedcost : float
+}
+entity "fact_transactions_dlm" <<fact>> {
+    pk: order_id : int
+		---
+		line_id : int
+		type : string
+		dt : string
+		pos_site_id : string
+		sku_id : string
+		fscldt_id : int
+		price_substate_id : string
+		sales_units : int
+		sales_dollars : float
+		discount_dollars : float
+		original_order_id : float
+		original_line_id : float
+}
+entity "hier_clnd_dlm" <<hier>> {
+    pk: fscldt_id : int
+		---
+		fscldt_label : string
+		fsclwk_id : int
+		fsclwk_label : string
+		fsclmth_id : int
+		fsclmth_label : string
+		fsclqrtr_id : int
+		fsclqrtr_label : string
+		fsclyr_id : int
+		fsclyr_label : int
+		ssn_id : string
+		ssn_label : string
+		ly_fscldt_id : int
+		lly_fscldt_id : int
+		fscldow : int
+		fscldom : int
+		fscldoq : int
+		fscldoy : int
+		fsclwoy : int
+		fsclmoy : int
+		fsclqoy : int
+		date : string
+}
+entity "hier_hldy_dlm" <<hier>> {
+    pk: hldy_id : string
+		---
+		hldy_label : string
+}
+entity "hier_invloc_dlm" <<hier>> {
+    pk: loc : int
+		---
+		loc_label : string
+		loctype : string
+		loctype_label : string
+}
+entity "hier_invstatus_dlm" <<hier>> {
+    pk: code_id : string
+		---
+		code_label : string
+		bckt_id : string
+		bckt_label : string
+		ownrshp_id : string
+		ownrshp_label : string
+}
+entity "hier_possite_dlm" <<hier>> {
+    pk: site_id : string
+		---
+		site_label : string
+		subchnl_id : string
+		subchnl_label : string
+		chnl_id : string
+		chnl_label : string
+}
+entity "hier_pricestate_dlm" <<hier>> {
+    pk: substate_id : string
+		---
+		substate_label : string
+		state_id : string
+		state_label : string
+}
+entity "hier_prod_dlm" <<hier>> {
+    pk: sku_id : string
+		---
+		sku_label : string
+		stylclr_id : string
+		stylclr_label : string
+		styl_id : string
+		styl_label : string
+		subcat_id : int
+		subcat_label : string
+		cat_id : int
+		cat_label : string
+		dept_id : int
+		dept_label : string
+		issvc : int
+		isasmbly : int
+		isnfs : int
+}
+entity "hier_rtlloc_dlm" <<hier>> {
+    pk: str : int
+		---
+		str_label : string
+		dstr : int
+		dstr_label : string
+		rgn : int
+		rgn_label : string
+}
+
+fact_averagecosts_dlm }|--o| hier_clnd_dlm
+fact_averagecosts_dlm }|--o| hier_prod_dlm
+
+fact_transactions_dlm }|--o| hier_prod_dlm
+fact_transactions_dlm }|--o| hier_clnd_dlm
+
+
+@enduml
