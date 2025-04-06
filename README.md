@@ -3,6 +3,36 @@ The Challenge: Data Warehouse and Data Pipeline
 This repository contains an end-to-end ETL pipeline that ingests, validates, transforms, and aggregates raw data files into a structured, query-ready format using Databricks.
 It also includes tools for visualizing and analyzing the data model.
 
+🧱 Architecture Overview
+
+![alt text](https://github.com/peaskipper/ETL_challenge/blob/main/ETL%20challenge.jpg)
+
+The pipeline is composed of the following stages:
+
+📥 Ingestion
+
+Raw pipe-delimited .gz files are read using pandas, parsed, and stored in ADLS.
+External Unity Catalog (UC) tables are created with metadata and constraints.
+
+✅ Validation
+
+Non-null, data type, primary key uniqueness, and foreign key relationship checks.
+
+📐 Normalization
+
+Hierarchy tables split into multiple normalized levels.
+SQL file organises normalized table creation using logical mapping.
+
+📊 Aggregation (WIP)
+
+Aggregates facts by dimensions using PySpark SQL and DLT pipelines.
+Watermarking ensures incremental fault-tolerant processing.
+
+📈 Visualization
+
+Inferred schema exported to .puml using uml_writer.py.
+ER diagram rendered and saved as .png.
+
 📁 Repository Structure
 ETL_challenge/
 ├── migration_library/           # Core library for parsing and ER diagram generation
@@ -36,33 +66,6 @@ ETL_challenge/
 ├── README.md                   # You're here!
 └── ...
 
-
-🧱 Architecture Overview
-The pipeline is composed of the following stages:
-
-📥 Ingestion
-
-Raw pipe-delimited .gz files are read using pandas, parsed, and stored in ADLS.
-External Unity Catalog (UC) tables are created with metadata and constraints.
-
-✅ Validation
-
-Non-null, data type, primary key uniqueness, and foreign key relationship checks.
-
-📐 Normalization
-
-Hierarchy tables split into multiple normalized levels.
-SQL file organises normalized table creation using logical mapping.
-
-📊 Aggregation (WIP)
-
-Aggregates facts by dimensions using PySpark SQL and DLT pipelines.
-Watermarking ensures incremental fault-tolerant processing.
-
-📈 Visualization
-
-Inferred schema exported to .puml using uml_writer.py.
-ER diagram rendered and saved as .png.
 
 🚀 How to Run
 
