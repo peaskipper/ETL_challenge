@@ -9,21 +9,16 @@ import re
 # import pythonplantuml
 
 ### self defined lib
-if __name__ == "__main__":
-    from ingest import ingest_src
-    from analyse import parse_dataset
-    from uml_writer import puml_script, tbl_name_reformat
-else:
-    from .ingest import ingest_src
-    from .analyse import parse_dataset
-    from .uml_writer import puml_script, tbl_name_reformat
+from ingest import ingest_src
+from analyse import parse_dataset
+from uml_writer import puml_script, tbl_name_reformat
 
 ######## Class, method Fn definitions
 
 
 ######## Source specific configs
 
-src_location = '..\\source_data\\data\\'
+src_location = 'ETL_challenge\\source_data\\data\\'
 extension = '.gz'
 compression = 'gzip'
 separator = '|'
@@ -61,7 +56,7 @@ relation_dim_dict = parsed_dataset.find_relation(dim_list, one2many=False)
 
 ##### Write puml script
 
-if __name__ == "__main__":
+if __init__ == "__main___":
     # Initiate script
     script = puml_script(classification)  
 
@@ -80,4 +75,3 @@ if __name__ == "__main__":
 ######## debug
 # x = relation_dim_dict
 # print(True)
-# raise ValueError("debugging")
