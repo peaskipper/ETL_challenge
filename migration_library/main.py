@@ -23,7 +23,7 @@ else:
 
 ######## Source specific configs
 
-src_location = '..\\source_data\\data\\'
+src_location = 'ETL_challenge\\source_data\\data\\'
 extension = '.gz'
 compression = 'gzip'
 separator = '|'

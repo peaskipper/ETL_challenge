@@ -66,6 +66,9 @@ ER diagram rendered and saved as .png.
 
 🚀 How to Run
 
+1. For data ingestion and puml render on local machine, run: `ETL_challenge/migration_library/main.py`
+2. For end-to-end pipeline: Set up databricks workflow using `ETL_challenge/databricks_workflow.yaml` and configure write locations
+
 Prerequisite: Access to a Databricks workspace with Unity Catalog & ADLS mount
 
 📦 Local (Setup and ER Diagram)
@@ -93,7 +96,7 @@ pip install pyspark
 3. Run docker image with this command docker: `run -it --rm -p 8888:8888 -v /path/to/your/notebooks:/home/jovyan/work jupyter/all-spark-notebook`
 4. Retrieve/Update variables in notebook to point to your azure blob storage
 
-## Set up the workflow using databricks_workflow.yaml:
+## Set up databricks workflow using pipeline_notebooks/databricks_workflow.yaml
 databricks jobs import --yaml-file databricks_workflow.yaml
 
 📌 Highlights
