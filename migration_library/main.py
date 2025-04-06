@@ -11,7 +11,7 @@ import re
 ### self defined lib
 from ingest import ingest_src
 from analyse import parse_dataset
-from uml_writer import puml_script
+from uml_writer import puml_script, tbl_name_reformat
 
 ######## Class, method Fn definitions
 
@@ -54,10 +54,11 @@ relation_dim_dict = parsed_dataset.find_relation(dim_list, one2many=False)
 script = puml_script(classification)
 for tbl,data in tbl_parsed_dict.items():
     typ = tbl.split('.',maxsplit=1)[0]
-    tbl_name = tbl.replace('.','_')
+    tbl_name = tbl_name_reformat(tbl)
     entity = script.add_entity(tbl_name,data['columns'],typ)
 
-puml_file_path = 'ETL_challenge\\output_obj\\ER_diagram_2.puml'
+entity = script.add_relationship(relation_fct_dict)
+puml_file_path = 'ETL_challenge\\output_obj\\ER_diagram.puml'
 save = script.end_script(puml_file_path)
 
 ######## debug
