@@ -5,7 +5,7 @@ It also includes tools for visualizing and analyzing the data model.
 
 🧱 Architecture Overview
 
-![alt text](https://github.com/peaskipper/ETL_challenge/blob/main/ETL%20challenge.jpg)
+![alt text](https://github.com/peaskipper/ETL_challenge/blob/develop/ETL%20challenge.jpg)
 
 The pipeline is composed of the following stages:
 
