@@ -39,18 +39,18 @@ ETL_challenge/
 │   ├── ingest.py                # Reads and processes raw gz files into dataframes
 │   ├── analyse.py               # Extracts relationships, infers PK/FK
 │   ├── uml_writer.py            # Generates PlantUML format from schema
-│   └── ...
+│   └── main.py                  # Orchestrates the extraction and parsing on local
 │
 ├── pipeline_notebooks/         # Databricks PySpark notebooks
 │   ├── data_ingestion.ipynb    # Writes raw files to Unity Catalog (external tables)
 │   ├── data_validation.ipynb   # Data quality checks: PK, FK, nulls, type mismatches
 │   ├── data_staging.ipynb      # Normalizes hierarchy into separate tables
-│   ├── data_transformation.ipynb # Basic transformations, joins
-│   ├── create_aggregate.ipynb  # Aggregation logic using SQL
-│   ├── data_aggregation_dlt.ipynb # DLT-based implementation (with watermarking)
-│   └── ...
+│   ├── data_transformation.ipynb   # Basic transformations, joins
+│   ├── create_aggregate.ipynb      # Aggregation logic using SQL
+│   ├── data_aggregation_dlt.ipynb  # DLT-based implementation (with watermarking)
+│   └── secret_scope.py             # Placeholder file for storing environment variables
 │
-├── sql_files_normalised/       # Contains SQL scripts to split hierarchies
+├── sql_files_normalised/       # Contains SQL scripts to split hierarchies into normalised dims
 │   ├── dim_cat.sql
 │   ├── dim_subcat.sql
 │   ├── ...
